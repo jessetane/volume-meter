@@ -12,6 +12,7 @@ function VolumeMeter (context, opts, onenterframe) {
   opts.tweenIn = opts.tweenIn || 1.618
   opts.tweenOut = opts.tweenOut || opts.tweenIn * 3
 
+  var delay = opts.delay || 0
   var buffer, self = this
   var range, next, tween, handle, last = 0
   var analyser = context.createAnalyser()
@@ -34,8 +35,12 @@ function VolumeMeter (context, opts, onenterframe) {
     next = Math.floor(Math.log1p(range) * 100)
     tween = next > last ? opts.tweenIn : opts.tweenOut
     next = last = last + (next - last) / tween
-
-    onenterframe(next)
+    if (delay === 0) {
+      delay = opts.delay || 0
+      onenterframe(next)
+    } else {
+      delay--
+    }
     handle = raf(render)
   }
 

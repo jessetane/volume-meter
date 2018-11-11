@@ -9,7 +9,7 @@ getusermedia({ audio: true, video: false }, function (err, stream) {
 
   var ctx = new AudioContext
   
-  var leftmeter = volumemeter(ctx, function (volume) {
+  var leftmeter = volumemeter(ctx, { delay: 10 }, function (volume) {
     left.style.height = volume + '%'
   })
 
